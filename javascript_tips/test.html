@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Coding Practice File</title>
+</head>
+<body>
+  <header>
+    <h1><span><img src="javascript.png" style="height: 50px;"/></span>JavaScript Tips</h1>
+  </header>
+
+
+  
+  <section>
+    <hr>
+    <h2 id="dad">Dad Joke Generator</h2>
+    <button id="dad_button">Generate Dad Joke</button>
+    <p id="joke">
+      <!-- Joke will be added here -->
+    </p>
+  </section>
+
+  <script>
+    document.getElementById("dad_button").addEventListener("click", function () {
+      console.log('Generating Dad Joke!')
+      let request = new XMLHttpRequest();
+      request.onload = function () {
+        document.getElementById("joke").innerHTML = this.responseText;
+        console.log('Dad Joke loaded!');
+      };
+      request.open("GET", "https://icanhazdadjoke.com/", true);
+      request.setRequestHeader("Accept", "text/plain");
+      request.send();
+    });
+  </script>
+
+
+
+  <section>
+    <hr>
+    <h2 id="dad">Cat GIF Generator</h2>
+    <button id="cat_button">Generate Cat GIF</button><br>
+    <img id="cat" /> <!-- Cat GIF will be added here -->
+  </section>
+
+  <script>
+    document.getElementById("cat_button").addEventListener("click", function () {
+      console.log('Generating Cat GIF')
+      let request = new XMLHttpRequest();
+      request.onload = function () {
+        document.getElementById("cat").src = "https://cataas.com/cat/gif";
+        console.log('Cat GIF loaded!')
+      };
+      request.open("GET", "https://cataas.com/cat/gif", true);
+      request.setRequestHeader("Accept", "text/plain");
+      request.send();
+    });
+  </script>
+
+
+
+  <section>
+    <hr>
+    <h2>Word Lookup</h2>
+    <form id="search-form">
+      <input type="text" id="search-input" placeholder="Search...">
+      <button type="submit">Search</button>
+    </form>
+    
+    <div id="result"></div>
+  </section>
+    
+    <script>
+      document.getElementById("search-form").addEventListener("submit", function (event) {
+        console.log('Generating Definitions');
+        event.preventDefault();
+        let query = document.getElementById("search-input").value;
+        let request = new XMLHttpRequest();
+        request.onload = function () {
+          let response = JSON.parse(this.responseText);
+          console.log(response);
+          let word = response[0].word;
+          let phonetic = response[0].phonetic;
+
+          let resultHTML = `
+            <p>
+              <strong>${word}</strong> [${phonetic}]
+            </p>
+            <ul>
+          `;
+
+          for (let meaning of response[0].meanings) {
+            let partOfSpeech = meaning.partOfSpeech;
+            for (let definition of meaning.definitions) {
+              resultHTML += `
+                <li>
+                  <em>${partOfSpeech}:</em> ${definition.definition}
+                </li>
+              `;
+            }
+          }
+          resultHTML += `</ul>`;
+          document.getElementById("result").innerHTML = resultHTML;
+          console.log('Definitions loaded!')
+        };
+        request.open("GET", `https://api.dictionaryapi.dev/api/v2/entries/en/${query}`, true);
+        request.send();
+      });
+    </script>
+
+
+
+  <footer style="bottom: 0; width: 100%;">
+    <hr>
+    <p style="text-align: center;">&#169; Matthew Allen 2023</p>
+    <button id="dont" style="border: none;"><small style="color:lightgray; font-size:x-small">please don't click me</small></button><br>
+    <a href="https://thesupermom.org/2023/taylor-woodson"><small style="font-size:xx-small;">Pool Table Fund</small></a>
+  </footer>
+
+  <script>
+    let index = 0;
+    let catSize = 300;
+    document.getElementById("dont").addEventListener('click', function () {
+      let replies = ['You suck.', 'You suck again.', 'You suck thrice as much.', 'I was so polite', 'And yet, you keep pressing the button', 'This is getting ridiculous.', 'Betty would be ashamed.', 'Please leave me alone.', 'Every time you press this button, a kitty dies.', 'Boom.  Dead kitty.', 'Boom. Another dead kitty.', 'That one was a baby.', `Here\'s a picture of the kitty you just murdered: http://placekitten.com/200/${catSize}`, 'Seriously, there are no more replies', 'except...']
+      console.log(replies[index]);
+      index = (index + 1) % replies.length;
+      catSize++;
+    });
+  </script>
+</body>
+</html>
