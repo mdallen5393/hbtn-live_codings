@@ -11,5 +11,4 @@ CREATE TABLE IF NOT EXISTS people (
   PRIMARY KEY (id)
 );
 
-INSERT INTO people (name) VALUES ('Chris'), ('Aaron'), ('Ben H'), ('Phillip'), ('Sarah'), ('Cason'), ('Doug'), ('Svitlana'), ('Zach'), ('Ben S'), ('Tayler'), ('Shadi'), ('Colan'), ('Matthew');
-
+INSERT INTO people (name) VALUES ('Chris'), ('Ben S'), ('Colan'), ('Sarah'), ('Zach'), ('Shadi'), ('Ben H'), ('Phillip'), ('Matthew'), ('Tayler'), ('Cason'), ('Doug'), ('Svitlana'), ('Aaron');
